@@ -12,6 +12,9 @@
     "vite": "^7.2.2"
   },
   "dependencies": {
-    "@editorjs/editorjs": "file:../editor.js"
+    "@editorjs/editorjs": "file:../editor.js",
+    "@editorjs/header": "^2.8.8",
+    "@editorjs/link": "^2.6.2",
+    "@editorjs/simple-image": "^1.6.0"
   }
 }

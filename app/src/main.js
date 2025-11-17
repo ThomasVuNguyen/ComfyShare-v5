@@ -1,5 +1,8 @@
 import './style.css'
 import EditorJS from '@editorjs/editorjs'
+import Header from '@editorjs/header'
+import SimpleImage from '@editorjs/simple-image'
+import LinkTool from '@editorjs/link'
 
 const app = document.querySelector('#app')
 
@@ -20,6 +23,20 @@ app.innerHTML = `
         <div class="editor-actions">
           <button id="save-button" type="button">Save content</button>
           <p class="hint">Click save to serialize the blocks below.</p>
+          <div class="quick-actions">
+            <p class="eyebrow">Quick insert</p>
+            <div class="quick-grid">
+              <button id="add-heading" class="quick-button" type="button">
+                Add heading
+              </button>
+              <button id="add-image" class="quick-button" type="button">
+                Add image
+              </button>
+              <button id="add-link" class="quick-button" type="button">
+                Add link preview
+              </button>
+            </div>
+          </div>
         </div>
         <section class="comment-panel">
           <header class="comment-header">
@@ -53,6 +70,9 @@ const commentInput = document.getElementById('comment-input')
 const commentList = document.getElementById('comment-list')
 const commentCount = document.getElementById('comment-count')
 const themeToggleButton = document.getElementById('theme-toggle')
+const headingButton = document.getElementById('add-heading')
+const imageButton = document.getElementById('add-image')
+const linkButton = document.getElementById('add-link')
 const comments = []
 
 const renderComments = () => {
@@ -94,13 +114,69 @@ const editor = new EditorJS({
   holder: 'editorjs',
   placeholder: 'Start writing your story...',
   autofocus: true,
-  tools: {},
+  tools: {
+    header: {
+      class: Header,
+      inlineToolbar: true,
+      config: {
+        levels: [2],
+        defaultLevel: 2
+      }
+    },
+    image: {
+      class: SimpleImage,
+      inlineToolbar: ['link'],
+      toolbox: {
+        title: 'Image',
+        icon:
+          '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="7" cy="8" r="1.4" fill="currentColor"/><path d="M4.5 13.5L8.5 9.5L11.5 12.5L15.5 8.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>'
+      }
+    },
+    linkTool: {
+      class: LinkTool,
+      config: {
+        endpoint: '/api/link-preview'
+      }
+    }
+  },
   data: {
     blocks: [
       {
+        type: 'header',
+        data: {
+          text: 'Give these rich blocks a try',
+          level: 2
+        }
+      },
+      {
         type: 'paragraph',
         data: {
-          text: 'Editor.js returns clean data output as structured JSON.'
+          text: 'Toggle the theme, edit the heading, and drop notes with the comment tool. '
+        }
+      },
+      {
+        type: 'image',
+        data: {
+          url: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=960&q=80',
+          caption: 'Sunrise tones pair nicely with the Coral + Royal palette.',
+          withBorder: true,
+          withBackground: false,
+          stretched: false
+        }
+      },
+      {
+        type: 'linkTool',
+        data: {
+          link: 'https://editorjs.io',
+          meta: {
+            title: 'Editor.js — Next generation block editor',
+            description:
+              'Block-styled editor with clean JSON output. Perfect for creating flexible content models.',
+            site_name: 'editorjs.io',
+            image: {
+              url: 'https://avatars.githubusercontent.com/u/15302092?s=200&v=4'
+            }
+          }
         }
       }
     ]
@@ -111,6 +187,43 @@ const serializeEditor = () => editor.save()
 
 const sanitizeExcerpt = (text = '') =>
   text.replace(/<[^>]+>/g, '').trim().slice(0, 120)
+
+const insertHeading = async () => {
+  await editor.isReady
+  editor.blocks.insert('header', {
+    text: 'New section title',
+    level: 2
+  })
+}
+
+const insertImage = async () => {
+  await editor.isReady
+  const url = window.prompt('Image URL to embed?')
+  if (!url) {
+    return
+  }
+  const caption = window.prompt('Optional caption?') || ''
+
+  editor.blocks.insert('image', {
+    url,
+    caption,
+    withBorder: true,
+    withBackground: false,
+    stretched: false
+  })
+}
+
+const insertLink = async () => {
+  await editor.isReady
+  const url = window.prompt('Link to preview?')
+  if (!url) {
+    return
+  }
+
+  editor.blocks.insert('linkTool', {
+    link: url
+  })
+}
 
 const themeOptions = [
   { name: 'sunrise', label: 'Sunrise' },
@@ -151,6 +264,10 @@ themeToggleButton?.addEventListener('click', () => {
 })
 
 applyTheme(activeThemeIndex)
+
+headingButton?.addEventListener('click', insertHeading)
+imageButton?.addEventListener('click', insertImage)
+linkButton?.addEventListener('click', insertLink)
 
 saveButton?.addEventListener('click', () => {
   serializeEditor()

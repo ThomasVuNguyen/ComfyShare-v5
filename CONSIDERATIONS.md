@@ -1,0 +1,14 @@
+# Blocks available at Editor JS
+  - @editorjs/paragraph – default rich text block (already bundled)
+  - @editorjs/header – structured headings (H1‑H6 with level selector)
+  - @editorjs/list – switchable ordered/unordered lists
+  - @editorjs/checklist – checklist with tickable items
+  - @editorjs/quote – stylized blockquote with author/caption
+  - @editorjs/code – monospace code block
+  - @editorjs/embed – YouTube, Vimeo, Twitter, etc.
+  - @editorjs/image / @editorjs/simple-image – upload or URL‑based images
+  - @editorjs/delimiter – decorative divider
+  - @editorjs/table – grid/table editor
+  - @editorjs/attaches – generic file attachment metadata
+  - @editorjs/raw – raw HTML snippet
+  - @editorjs/link – unfurls rich previews when dropping a link

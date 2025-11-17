@@ -140,7 +140,7 @@ body[data-theme='midnight'] {
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
   background: var(--color-actions-bg);
 }
 
@@ -193,6 +193,47 @@ button[data-variant='ghost']:hover {
   flex-direction: column;
   gap: 0.75rem;
   max-height: 480px;
+}
+
+.quick-actions {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+body[data-theme='midnight'] .quick-actions {
+  border-color: rgba(243, 241, 228, 0.2);
+}
+
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.4rem;
+}
+
+.quick-button {
+  all: unset;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-shell-border);
+  box-shadow: none;
+  transition: background 160ms ease, color 160ms ease;
+  text-align: center;
+  cursor: pointer;
+}
+
+.quick-button:hover {
+  background: rgba(83, 124, 247, 0.12);
+  color: var(--color-highlight);
+}
+
+body[data-theme='midnight'] .quick-button {
+  border-color: rgba(243, 241, 228, 0.15);
 }
 
 .comment-header {
