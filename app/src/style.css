@@ -5,8 +5,6 @@
     'Segoe UI', sans-serif;
   line-height: 1.4;
   font-weight: 400;
-  color: #212121;
-  background-color: #f3f1e4;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -20,10 +18,62 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: radial-gradient(circle at top, rgba(248, 111, 84, 0.12), transparent),
+  color: var(--color-text, #212121);
+  background: var(--app-bg, #f3f1e4);
+  padding: 2rem;
+  transition: background 200ms ease, color 200ms ease;
+}
+
+body {
+  --color-text: #212121;
+  --color-muted: rgba(33, 33, 33, 0.7);
+  --color-paper: #f3f1e4;
+  --color-card: #fffdf7;
+  --color-card-border: rgba(33, 33, 33, 0.08);
+  --color-shell-border: rgba(33, 33, 33, 0.08);
+  --color-editor-bg: #fff;
+  --color-actions-border: rgba(83, 124, 247, 0.35);
+  --color-actions-bg: rgba(83, 124, 247, 0.08);
+  --color-button: #f86f54;
+  --color-button-hover: #f45734;
+  --color-button-shadow: rgba(248, 111, 84, 0.35);
+  --color-comment-border: rgba(0, 166, 166, 0.35);
+  --color-comment-bg: rgba(0, 166, 166, 0.04);
+  --color-comment-meta: #00a6a6;
+  --color-comment-quote: rgba(33, 33, 33, 0.7);
+  --color-output-bg: #212121;
+  --color-output-text: #f3f1e4;
+  --color-highlight: #537cf7;
+  --color-hint: rgba(33, 33, 33, 0.66);
+  --app-bg: radial-gradient(circle at top, rgba(248, 111, 84, 0.12), transparent),
     radial-gradient(circle at 20% 40%, rgba(0, 166, 166, 0.1), transparent),
     #f3f1e4;
-  padding: 2rem;
+}
+
+body[data-theme='midnight'] {
+  --color-text: #f3f1e4;
+  --color-muted: rgba(243, 241, 228, 0.75);
+  --color-paper: #212121;
+  --color-card: #121212;
+  --color-card-border: rgba(243, 241, 228, 0.08);
+  --color-shell-border: rgba(243, 241, 228, 0.12);
+  --color-editor-bg: #1a1a1a;
+  --color-actions-border: rgba(0, 166, 166, 0.45);
+  --color-actions-bg: rgba(0, 166, 166, 0.12);
+  --color-button: #537cf7;
+  --color-button-hover: #3b5dd8;
+  --color-button-shadow: rgba(83, 124, 247, 0.35);
+  --color-comment-border: rgba(248, 111, 84, 0.45);
+  --color-comment-bg: rgba(248, 111, 84, 0.08);
+  --color-comment-meta: #f86f54;
+  --color-comment-quote: rgba(243, 241, 228, 0.75);
+  --color-output-bg: #000;
+  --color-output-text: #f3f1e4;
+  --color-highlight: #00a6a6;
+  --color-hint: rgba(243, 241, 228, 0.75);
+  --app-bg: radial-gradient(circle at top, rgba(0, 166, 166, 0.25), transparent),
+    radial-gradient(circle at 80% 0%, rgba(83, 124, 247, 0.2), transparent),
+    #212121;
 }
 
 #app {
@@ -32,25 +82,32 @@ body {
 }
 
 .editor-app {
-  background: #fffdf7;
+  background: var(--color-card);
   padding: 2.5rem;
   border-radius: 20px;
-  border: 1px solid rgba(33, 33, 33, 0.08);
+  border: 1px solid var(--color-card-border);
   box-shadow: 0 25px 85px rgba(33, 33, 33, 0.08);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-header > h1 {
-  margin: 0;
-  font-size: 1.9rem;
-  color: #212121;
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
 
-header > p {
+.app-header h1 {
+  margin: 0;
+  font-size: 1.9rem;
+}
+
+.app-header p {
   margin: 0.25rem 0 0;
-  color: rgba(33, 33, 33, 0.7);
+  color: var(--color-muted);
 }
 
 .editor-shell {
@@ -62,10 +119,10 @@ header > p {
 .editor-canvas {
   flex: 3;
   min-height: 260px;
-  border: 1px solid rgba(33, 33, 33, 0.08);
+  border: 1px solid var(--color-shell-border);
   border-radius: 14px;
   padding: 1.25rem;
-  background: #fff;
+  background: var(--color-editor-bg);
 }
 
 .editor-sidebar {
@@ -79,12 +136,12 @@ header > p {
 .editor-actions {
   flex: 1;
   border-radius: 14px;
-  border: 1px dashed rgba(83, 124, 247, 0.35);
+  border: 1px dashed var(--color-actions-border);
   padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  background: rgba(83, 124, 247, 0.08);
+  background: var(--color-actions-bg);
 }
 
 button {
@@ -94,16 +151,16 @@ button {
   font-size: 1rem;
   font-weight: 600;
   font-family: inherit;
-  background-color: #f86f54;
+  background-color: var(--color-button);
   color: #fff;
   cursor: pointer;
   transition: background-color 160ms ease, transform 160ms ease,
     box-shadow 160ms ease;
-  box-shadow: 0 10px 25px rgba(248, 111, 84, 0.35);
+  box-shadow: 0 10px 25px var(--color-button-shadow);
 }
 
 button:hover {
-  background-color: #f45734;
+  background-color: var(--color-button-hover);
   transform: translateY(-1px);
 }
 
@@ -112,11 +169,26 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
+button[data-variant='ghost'] {
+  background: transparent;
+  color: var(--color-highlight);
+  box-shadow: none;
+  border: 1px solid rgba(83, 124, 247, 0.25);
+}
+
+body[data-theme='midnight'] button[data-variant='ghost'] {
+  border-color: rgba(243, 241, 228, 0.35);
+}
+
+button[data-variant='ghost']:hover {
+  background: rgba(83, 124, 247, 0.12);
+}
+
 .comment-panel {
   border-radius: 14px;
-  border: 1px solid rgba(0, 166, 166, 0.35);
+  border: 1px solid var(--color-comment-border);
   padding: 1.25rem;
-  background: rgba(0, 166, 166, 0.04);
+  background: var(--color-comment-bg);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -134,13 +206,13 @@ button:focus-visible {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.75rem;
-  color: #00a6a6;
+  color: var(--color-comment-meta);
 }
 
 .comment-count {
   margin: 0.2rem 0 0;
   font-weight: 600;
-  color: #537cf7;
+  color: var(--color-highlight);
 }
 
 .comment-form {
@@ -152,13 +224,13 @@ button:focus-visible {
 .comment-form label {
   font-size: 0.9rem;
   font-weight: 500;
-  color: rgba(33, 33, 33, 0.7);
+  color: var(--color-muted);
 }
 
 .comment-form textarea {
   width: 100%;
   border-radius: 10px;
-  border: 1px solid rgba(0, 166, 166, 0.35);
+  border: 1px solid var(--color-comment-border);
   padding: 0.6rem 0.75rem;
   resize: vertical;
   min-height: 80px;
@@ -169,7 +241,7 @@ button:focus-visible {
 
 .comment-form textarea:focus-visible {
   outline: 3px solid rgba(83, 124, 247, 0.25);
-  border-color: #537cf7;
+  border-color: var(--color-highlight);
 }
 
 .comment-list {
@@ -184,9 +256,9 @@ button:focus-visible {
 
 .comment-list li {
   border-radius: 12px;
-  border: 1px solid rgba(83, 124, 247, 0.25);
+  border: 1px solid var(--color-comment-border);
   padding: 0.85rem;
-  background: rgba(83, 124, 247, 0.07);
+  background: var(--color-comment-bg);
 }
 
 .comment-meta {
@@ -194,41 +266,41 @@ button:focus-visible {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: #00a6a6;
+  color: var(--color-comment-meta);
 }
 
 .comment-list blockquote {
   margin: 0.45rem 0;
   padding-left: 0.75rem;
-  border-left: 3px solid #537cf7;
-  color: rgba(33, 33, 33, 0.7);
+  border-left: 3px solid var(--color-highlight);
+  color: var(--color-comment-quote);
   font-size: 0.9rem;
 }
 
 .comment-body {
   margin: 0;
-  color: #212121;
+  color: var(--color-text);
   font-size: 0.95rem;
 }
 
 .comment-empty,
 .comment-error {
   text-align: center;
-  color: rgba(33, 33, 33, 0.6);
+  color: var(--color-muted);
   font-size: 0.9rem;
 }
 
 .hint {
   margin: 0;
   font-size: 0.9rem;
-  color: rgba(33, 33, 33, 0.66);
+  color: var(--color-hint);
 }
 
 .editor-output {
   border-radius: 14px;
-  background: #212121;
-  color: #f3f1e4;
-  border: 1px solid rgba(33, 33, 33, 0.08);
+  background: var(--color-output-bg);
+  color: var(--color-output-text);
+  border: 1px solid var(--color-shell-border);
   padding: 1.25rem;
   min-height: 120px;
   overflow: auto;

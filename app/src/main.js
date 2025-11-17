@@ -5,9 +5,14 @@ const app = document.querySelector('#app')
 
 app.innerHTML = `
   <main class="editor-app">
-    <header>
-      <h1>Editor.js demo</h1>
-      <p>Minimal block-style text editor built with the local Editor.js source.</p>
+    <header class="app-header">
+      <div>
+        <h1>Editor.js demo</h1>
+        <p>Minimal block-style text editor built with the local Editor.js source.</p>
+      </div>
+      <button id="theme-toggle" data-variant="ghost" type="button">
+        Toggle theme
+      </button>
     </header>
     <section class="editor-shell">
       <div id="editorjs" class="editor-canvas"></div>
@@ -47,6 +52,7 @@ const commentForm = document.getElementById('comment-form')
 const commentInput = document.getElementById('comment-input')
 const commentList = document.getElementById('comment-list')
 const commentCount = document.getElementById('comment-count')
+const themeToggleButton = document.getElementById('theme-toggle')
 const comments = []
 
 const renderComments = () => {
@@ -105,6 +111,46 @@ const serializeEditor = () => editor.save()
 
 const sanitizeExcerpt = (text = '') =>
   text.replace(/<[^>]+>/g, '').trim().slice(0, 120)
+
+const themeOptions = [
+  { name: 'sunrise', label: 'Sunrise' },
+  { name: 'midnight', label: 'Midnight' }
+]
+const THEME_STORAGE_KEY = 'editor-theme-preference'
+const storage =
+  typeof window !== 'undefined' && window.localStorage ? window.localStorage : null
+let activeThemeIndex = (() => {
+  if (!storage) {
+    return 0
+  }
+  const savedTheme = storage.getItem(THEME_STORAGE_KEY)
+  const savedIndex = themeOptions.findIndex((theme) => theme.name === savedTheme)
+  return savedIndex >= 0 ? savedIndex : 0
+})()
+
+const applyTheme = (index) => {
+  activeThemeIndex = index % themeOptions.length
+  const currentTheme = themeOptions[activeThemeIndex]
+  const nextTheme = themeOptions[(activeThemeIndex + 1) % themeOptions.length]
+
+  if (currentTheme.name === 'sunrise') {
+    document.body.removeAttribute('data-theme')
+  } else {
+    document.body.dataset.theme = currentTheme.name
+  }
+
+  if (themeToggleButton) {
+    themeToggleButton.textContent = `Switch to ${nextTheme.label}`
+  }
+
+  storage?.setItem(THEME_STORAGE_KEY, currentTheme.name)
+}
+
+themeToggleButton?.addEventListener('click', () => {
+  applyTheme(activeThemeIndex + 1)
+})
+
+applyTheme(activeThemeIndex)
 
 saveButton?.addEventListener('click', () => {
   serializeEditor()
