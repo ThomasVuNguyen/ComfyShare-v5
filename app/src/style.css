@@ -1,0 +1,126 @@
+:root {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  line-height: 1.4;
+  font-weight: 400;
+  color: #0b1f33;
+  background-color: #f7f9fc;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #f7fbff 0%, #edf1f7 55%, #f7f9fc 100%);
+  padding: 2rem;
+}
+
+#app {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.editor-app {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 30px 90px rgba(15, 36, 84, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+header > h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+header > p {
+  margin: 0.25rem 0 0;
+  color: #4a6078;
+}
+
+.editor-shell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.editor-canvas {
+  flex: 3;
+  min-height: 260px;
+  border: 1px solid #dae4f2;
+  border-radius: 14px;
+  padding: 1.25rem;
+  background: #fefefe;
+}
+
+.editor-actions {
+  flex: 1;
+  min-width: 180px;
+  border-radius: 14px;
+  border: 1px dashed #c9d8ee;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: #f5f8ff;
+}
+
+button {
+  border-radius: 10px;
+  border: none;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  background-color: #2563eb;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+button:hover {
+  background-color: #1d4fd7;
+  transform: translateY(-1px);
+}
+
+button:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.45);
+  outline-offset: 2px;
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #5f7696;
+}
+
+.editor-output {
+  border-radius: 14px;
+  background: #0b1f33;
+  color: #e6edf6;
+  padding: 1.25rem;
+  min-height: 120px;
+  overflow: auto;
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 1rem;
+  }
+
+  .editor-app {
+    padding: 1.5rem;
+  }
+}
