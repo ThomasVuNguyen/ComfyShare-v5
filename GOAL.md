@@ -16,3 +16,9 @@ Theme switcher
 Add in h2 header, image embed & url
 (result: almost there)
 
+# Goal 5
+Notion-like interface. Edge to edge design
+
+# Goal 6
+Integrate with firebase to store the content
+
